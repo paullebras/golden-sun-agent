@@ -1,0 +1,11 @@
+Frame: 778067, Time: 2025-02-22 21:43:12, Input: Down, Duration: 229
+Frame: 778230, Time: 2025-02-22 21:43:15, Input: Down, Duration: 162
+Frame: 778645, Time: 2025-02-22 21:43:24, Input: Down, Duration: 414
+Frame: 779370, Time: 2025-02-22 21:43:37, Input: Up, Duration: 724
+Frame: 779625, Time: 2025-02-22 21:43:41, Input: Up, Duration: 254
+Frame: 780291, Time: 2025-02-22 21:43:53, Input: Down, Duration: 665
+Frame: 780982, Time: 2025-02-22 21:44:04, Input: Down, Duration: 690
+Frame: 781323, Time: 2025-02-22 21:44:10, Input: Left, Duration: 340
+Frame: 781953, Time: 2025-02-22 21:44:27, Input: Left, Duration: 629
+Frame: 782859, Time: 2025-02-22 21:44:45, Input: Left, Duration: 905
+Frame: 783808, Time: 2025-02-22 21:45:02, Input: Down, Duration: 948
