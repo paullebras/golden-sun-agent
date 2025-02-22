@@ -1,64 +1,36 @@
-local inputFile = "./inputs.txt"  -- Path to the input file
-local logFile = "./input_log.txt"  -- Path to the log file
-local file = io.open(logFile, "w")  -- Open the log file in write mode
+import random
 
--- Function to log inputs to the console
-local function logToConsole(input, duration)
-    console.writeline(string.format("Input: %s, Duration: %d frames", input, duration))
-end
+# Define the possible GBA inputs
+gba_inputs = ["A", "B", "L", "R", "Select", "Start"]
+movement_inputs = ["Up", "Down", "Left", "Right"]
 
--- Function to log inputs to the file
-local function logInput(input, duration)
-    if file then
-        local timestamp = os.time()  -- Get the current timestamp
-        local frame = emu.framecount()  -- Get the current frame count
-        file:write(string.format("Frame: %d, Time: %s, Input: %s, Duration: %d\n", frame, os.date("%Y-%m-%d %H:%M:%S", timestamp), input, duration))
-        file:flush()  -- Ensure the data is written to the file immediately
-    end
-end
+# Define the number of random inputs to generate
+num_inputs = 100
 
--- Function to read inputs and durations from the file
-local function readInputs()
-    local inputs = {}
-    local inputFileHandle = io.open(inputFile, "r")
-    if inputFileHandle then
-        for line in inputFileHandle:lines() do
-            local input, duration = line:match("([^,]+),([^,]+)")
-            if input and duration then
-                table.insert(inputs, {input = input, duration = tonumber(duration)})
-            end
-        end
-        inputFileHandle:close()
-    end
-    return inputs
-end
+# Probability of generating a movement key
+movement_probability = 1
 
--- Function to simulate button press for a given duration
-local function pressButton(button, duration)
-    joypad.set({[button] = true})
-    for _ = 1, duration do
-        emu.frameadvance()
-    end
-    joypad.set({[button] = false})
-    emu.frameadvance()
-    logInput(button, duration)  -- Log the button press and duration to the file
-    logToConsole(button, duration)  -- Log the button press and duration to the console
-end
+# Function to generate a random duration
+def generate_duration(input_action):
+    if input_action in movement_inputs:
+        return random.randint(100, 1000)  # Random duration between 100 and 1000 frames
+    else:
+        return 1  # Duration of 1 frame for other inputs
 
--- Main loop
-while true do
-    local inputs = readInputs()
-    for _, inputData in ipairs(inputs) do
-        local input = inputData.input
-        local duration = inputData.duration
-        if input == "A" or input == "B" or input == "Up" or input == "Down" or input == "Left" or input == "Right" or input == "L" or input == "R" or input == "Select" or input == "Start" then
-            pressButton(input, duration)
-        end
-    end
-    emu.frameadvance()
-end
+# Generate random inputs with durations
+random_inputs = []
+for _ in range(num_inputs):
+    if random.random() < movement_probability:
+        input_action = random.choice(movement_inputs)
+    else:
+        input_action = random.choice(gba_inputs)
+    duration = generate_duration(input_action)
+    random_inputs.append((input_action, duration))
 
--- Close the log file when done (optional, as the script runs indefinitely)
-if file then
-    file:close()
-end
+# Write the random inputs and durations to a file
+input_file_path = "inputs.txt"
+with open(input_file_path, "w") as file:
+    for input_action, duration in random_inputs:
+        file.write(f"{input_action},{duration}\n")
+
+print(f"Generated {num_inputs} random inputs with durations and saved to {input_file_path}")
