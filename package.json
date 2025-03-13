@@ -1,0 +1,33 @@
+{
+  "name": "golden-sun-agent",
+  "version": "1.0.0",
+  "description": "A bot designed to play Golden Sun",
+  "main": "dist/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "watch": "nodemon --watch 'src/**/*.ts' --exec tsx src/app.ts",
+    "prod": "npm run build && npm run start",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ai-sdk/openai": "^1.1.15",
+    "ai": "^4.1.47",
+    "dotenv": "^16.4.7",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.8",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

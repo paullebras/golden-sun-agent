@@ -33,16 +33,17 @@ local function readInputs()
     return inputs
 end
 
--- Function to simulate button press for a given duration
-local function pressButton(button, duration)
-    joypad.set({[button] = true})
-    for _ = 1, duration do
+-- Function to hold a button for a specified duration
+local function holdButton(button, frames)
+    local startFrame = emu.framecount()
+    while (emu.framecount() - startFrame) < frames do
+        joypad.set({[button] = true})
         emu.frameadvance()
     end
     joypad.set({[button] = false})
     emu.frameadvance()
-    logInput(button, duration)  -- Log the button press and duration to the file
-    logToConsole(button, duration)  -- Log the button press and duration to the console
+    logInput(button, frames)
+    logToConsole(button, frames)
 end
 
 -- Main loop
@@ -52,7 +53,7 @@ while true do
         local input = inputData.input
         local duration = inputData.duration
         if input == "A" or input == "B" or input == "Up" or input == "Down" or input == "Left" or input == "Right" or input == "L" or input == "R" or input == "Select" or input == "Start" then
-            pressButton(input, duration)
+            holdButton(input, duration)
         end
     end
     emu.frameadvance()

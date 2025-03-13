@@ -13,7 +13,7 @@ movement_probability = 1
 # Function to generate a random duration
 def generate_duration(input_action):
     if input_action in movement_inputs:
-        return random.randint(100, 1000)  # Random duration between 100 and 1000 frames
+        return random.randint(60, 300)  # Random duration between 100 and 1000 frames
     else:
         return 1  # Duration of 1 frame for other inputs
 
