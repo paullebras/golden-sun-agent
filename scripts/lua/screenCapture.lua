@@ -1,1 +1,0 @@
-client.screenshot("./screenshots/screenshot.png");

@@ -1,14 +1,14 @@
 import * as BizhawkService from './BizhawkService';
 
-function mute() {
-  BizhawkService.pushBizhawkEventStack(BizhawkService.BizhawkAction.MUTE);
-}
+export const BizhawkController = {
+  mute: () =>
+    BizhawkService.pushBizhawkEventStack(BizhawkService.BizhawkAction.MUTE),
 
-function unmute() {
-  BizhawkService.pushBizhawkEventStack(BizhawkService.BizhawkAction.UNMUTE);
-}
+  unmute: () =>
+    BizhawkService.pushBizhawkEventStack(BizhawkService.BizhawkAction.UNMUTE),
 
-export default {
-  mute,
-  unmute,
+  screenshot: () =>
+    BizhawkService.pushBizhawkEventStack(
+      BizhawkService.BizhawkAction.SCREENSHOT,
+    ),
 };

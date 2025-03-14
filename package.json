@@ -16,8 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ai-sdk/openai": "^1.1.15",
-    "ai": "^4.1.47",
+    "@ai-sdk/anthropic": "^1.1.17",
+    "@ai-sdk/mistral": "^1.1.17",
+    "@ai-sdk/openai": "^1.2.5",
+    "ai": "^4.1.61",
     "dotenv": "^16.4.7",
     "zod": "^3.24.2"
   },

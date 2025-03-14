@@ -1,44 +1,27 @@
-import * as net from 'net';
+import net from 'net';
+import { env } from './config/envConfig';
 
-/************************************************************************
- *  Variables
- ************************************************************************/
-let port = 53333;
-let url = 'localhost'; // Initialize the url variable
+const PORT = parseInt(env.BIZHAWK_SERVER_PORT);
+const HOST = env.BIZHAWK_SERVER_HOST;
 
-/************************************************************************
- * Module functions
- ************************************************************************/
-export function send(data: string) {
-  let client = init();
-  client.on('ready', function () {
-    console.log('Sending...');
-    client.write(data + '\r\n'); // Gotta close the request with CRLF
-  });
-}
-
-/***********************************************************************
- * Internal methods
- ***********************************************************************/
-function init() {
-  console.log('entering init');
-  let client = new net.Socket();
-  client.connect(port, url, function () {
-    console.log('Connecting...');
+export function sendMessage(data: string) {
+  const client = new net.Socket();
+  client.connect(PORT, HOST, () => {
+    console.log(`Connected to BizHawk server at ${HOST}:${PORT}`);
+    client.write(data + '\r\n');
   });
 
-  client.on('data', function (data) {
-    console.log('Received: ' + data);
-    client.destroy(); // kill client after server's response
-  });
-
-  client.on('error', function (err) {
-    console.log(err);
+  client.on('data', (data) => {
+    console.log('Received:', data.toString());
     client.destroy();
   });
 
-  client.on('close', function () {
+  client.on('error', (err) => {
+    console.error('Socket error:', err);
+    client.destroy();
+  });
+
+  client.on('close', () => {
     console.log('Connection closed');
   });
-  return client;
 }
