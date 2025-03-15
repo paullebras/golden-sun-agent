@@ -19,3 +19,28 @@ export const screenshotTool = tool({
   parameters: z.object({}),
   execute: async () => BizhawkController.screenshot(),
 });
+
+export const holdButtonTool = tool({
+  description: 'Hold a button for a specified duration (in frames) in Bizhawk',
+  parameters: z.object({
+    button: z
+      .enum([
+        'A',
+        'B',
+        'Up',
+        'Down',
+        'Left',
+        'Right',
+        'L',
+        'R',
+        'Select',
+        'Start',
+      ])
+      .describe('The button to hold.'),
+    duration: z
+      .number()
+      .describe('The duration (in frames) to hold the button for.'),
+  }),
+  execute: async ({ button, duration }) =>
+    BizhawkController.holdButton(button, duration),
+});

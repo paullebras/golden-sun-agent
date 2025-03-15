@@ -1,12 +1,7 @@
--- Function to press and release the "A" button
 local function pressAndReleaseButton()
-    -- Simulate pressing the "A" button
     joypad.set({A=true})
-    -- Advance one frame to register the button press
     emu.frameadvance()
-    -- Simulate releasing the "A" button
     joypad.set({A=false})
-    -- Advance one frame to register the button release
     emu.frameadvance()
 end
 

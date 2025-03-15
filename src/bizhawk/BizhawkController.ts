@@ -11,4 +11,10 @@ export const BizhawkController = {
     BizhawkService.pushBizhawkEventStack(
       BizhawkService.BizhawkAction.SCREENSHOT,
     ),
+
+  holdButton: (button: string, duration: number) =>
+    BizhawkService.pushBizhawkEventStack(
+      BizhawkService.BizhawkAction.HOLD_BUTTON,
+      { button, duration },
+    ),
 };

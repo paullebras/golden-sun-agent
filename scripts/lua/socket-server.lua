@@ -27,6 +27,40 @@ end)
 server:settimeout(0)
 print("Waiting for connections on port 53333")
 
+-- Active button holds
+local activeHolds = {}
+
+-- Function to hold a button for a specified duration
+local function holdButton(button, frames)
+    table.insert(activeHolds, {
+        button = button,
+        frames = tonumber(frames),
+        startFrame = emu.framecount()
+    })
+    return string.format("Started holding %s for %s frames", button, frames)
+end
+
+-- Function to process the current active button holds
+local function processActiveHolds()
+    local i = 1
+    while i <= #activeHolds do
+        local hold = activeHolds[i]
+        local currentFrame = emu.framecount()
+        local elapsedFrames = currentFrame - hold.startFrame
+        
+        if elapsedFrames < hold.frames then
+            -- Keep holding the button
+            joypad.set({[hold.button] = true})
+            i = i + 1
+        else
+            -- Release the button and remove from active holds
+            joypad.set({[hold.button] = false})
+            table.remove(activeHolds, i)
+            print(string.format("Released %s after %d frames", hold.button, hold.frames))
+        end
+    end
+end
+
 local function handleCommand(line)
     if line == 'MUTE' then
         client.SetSoundOn(false)
@@ -35,9 +69,26 @@ local function handleCommand(line)
         client.SetSoundOn(true)
         return "UNMUTE executed"
     elseif line == 'SCREENSHOT' then
-        client.screenshot("./screenshots/screenshot.png");
-        return "UNMUTE executed"
+        client.screenshot("../../screenshots/screenshot.png")
+        return "SCREENSHOT executed"
     else
+        -- Check if it's a button hold command (format: "Button,Duration")
+        local button, duration = line:match("([^,]+),([^,]+)")
+        if button and duration then
+            -- Validate button input
+            local validButtons = {
+                ["A"] = true, ["B"] = true, 
+                ["Up"] = true, ["Down"] = true, ["Left"] = true, ["Right"] = true,
+                ["L"] = true, ["R"] = true, 
+                ["Select"] = true, ["Start"] = true
+            }
+            
+            if validButtons[button] then
+                return holdButton(button, duration)
+            else
+                return string.format("Invalid button: %s", button)
+            end
+        end
         return "Unknown command"
     end
 end
@@ -60,6 +111,10 @@ local co = coroutine.create(function()
 end)
 
 while true do
+    -- Process any active button holds
+    processActiveHolds()
+    
+    -- Continue normal emulation
     emu.frameadvance()
     coroutine.resume(co)
 end
