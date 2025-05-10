@@ -83,6 +83,12 @@ class AIService {
       model: this.model,
       system: systemMessage,
       tools: toolSet,
+      maxSteps: 1,
+      /*
+       * TODO handle multi steps ?
+       * AI generation error: Invalid value for 'content': expected a string, got null.
+       * Error generating response: Error: Failed to generate AI response: Invalid value for 'content': expected a string, got null.
+       */
     };
 
     // If no image is provided, use text-only prompt format
@@ -90,14 +96,12 @@ class AIService {
       return {
         ...commonConfig,
         prompt,
-        maxSteps: 2,
       };
     }
 
     // If image is provided, use multimodal message format
     return {
       ...commonConfig,
-      maxSteps: 2,
       messages: [
         {
           role: 'user',
@@ -120,7 +124,8 @@ class AIService {
   ): Promise<GenerateResponse> {
     try {
       const input = this.buildInput(prompt, systemMessage, base64Image);
-      return await generateText(input);
+      const result = await generateText(input);
+      return result;
     } catch (error) {
       console.error(
         'AI generation error:',
