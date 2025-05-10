@@ -29,5 +29,10 @@ Launch bizhawk, start a game and drag the `lua-socket-server.lua` to the game wi
 
 Now, to run this server locally and have the bot execute commands, open a terminal and run the commands:
 
-* `npm i`
-* `npm run watch-server`
+* `npm install`
+
+Automatic mode
+* `npm run watch:auto`
+
+Manual mode
+* `npm run watch:auto`

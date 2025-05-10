@@ -1,8 +1,7 @@
 import net from 'net';
-import { env } from './config/envConfig';
+import { envConfig } from './config/envConfig';
 
-const PORT = parseInt(env.BIZHAWK_SERVER_PORT);
-const HOST = env.BIZHAWK_SERVER_HOST;
+const { BIZHAWK_SERVER_PORT: PORT, BIZHAWK_SERVER_HOST: HOST } = envConfig;
 
 export function sendMessage(data: string) {
   const client = new net.Socket();

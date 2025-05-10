@@ -8,6 +8,8 @@
     "start": "node dist/app.js",
     "build": "tsc",
     "watch": "nodemon --watch 'src/**/*.ts' --exec tsx src/app.ts",
+    "watch:manual": "nodemon --watch 'src/**/*.ts' --exec tsx src/app.ts",
+    "watch:auto": "nodemon --watch 'src/**/*.ts' --exec tsx src/app.ts auto",
     "prod": "npm run build && npm run start",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "lint": "eslint ."

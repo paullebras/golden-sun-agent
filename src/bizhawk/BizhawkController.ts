@@ -7,6 +7,7 @@ export const BizhawkController = {
   unmute: () =>
     BizhawkService.pushBizhawkEventStack(BizhawkService.BizhawkAction.UNMUTE),
 
+  // TODO : Save screenshots with timestamps, then read latest
   screenshot: () =>
     BizhawkService.pushBizhawkEventStack(
       BizhawkService.BizhawkAction.SCREENSHOT,
