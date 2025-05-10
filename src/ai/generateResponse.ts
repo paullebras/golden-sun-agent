@@ -16,6 +16,9 @@ export async function generateResponse(
     response.toolResults.forEach((result) => {
       console.log(`[TOOL RESULT] ${result.toolName}`);
     });
+    response.toolCalls.forEach((call) => {
+      console.log(`[TOOL CALL] ${call.toolName}`);
+    });
     return response.text;
   } catch (error) {
     console.error('Error generating response:', error);
