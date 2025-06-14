@@ -5,7 +5,7 @@ package.path = ";./socket/?.lua;"
 -- Lua Socket documentation here: http://w3.impa.br/~diego/software/luasocket/reference.html
 -- You probably want to check out the TCP parts
 
--- Worth noting in this script is that "client" refers to the client API to bizhawk, and 
+-- Worth noting in this script is that "client" refers to the client API to bizhawk, and
 -- "conn" refers to the server client connections
 ----------------------------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ local function processActiveHolds()
         local hold = activeHolds[i]
         local currentFrame = emu.framecount()
         local elapsedFrames = currentFrame - hold.startFrame
-        
+
         if elapsedFrames < hold.frames then
             -- Keep holding the button
             joypad.set({[hold.button] = true})
@@ -77,12 +77,12 @@ local function handleCommand(line)
         if button and duration then
             -- Validate button input
             local validButtons = {
-                ["A"] = true, ["B"] = true, 
+                ["A"] = true, ["B"] = true,
                 ["Up"] = true, ["Down"] = true, ["Left"] = true, ["Right"] = true,
-                ["L"] = true, ["R"] = true, 
+                ["L"] = true, ["R"] = true,
                 ["Select"] = true, ["Start"] = true
             }
-            
+
             if validButtons[button] then
                 return holdButton(button, duration)
             else
@@ -113,7 +113,7 @@ end)
 while true do
     -- Process any active button holds
     processActiveHolds()
-    
+
     -- Continue normal emulation
     emu.frameadvance()
     coroutine.resume(co)
