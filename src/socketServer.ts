@@ -11,16 +11,16 @@ export function sendMessage(data: string) {
   });
 
   client.on('data', (data) => {
-    console.log('Received:', data.toString());
+    console.log('TS server received:', data.toString());
     client.destroy();
   });
 
   client.on('error', (err) => {
-    console.error('Socket error:', err);
+    console.error('TS server socket error:', err);
     client.destroy();
   });
 
   client.on('close', () => {
-    console.log('Connection closed');
+    console.log('Connection to BizHawk server closed');
   });
 }
